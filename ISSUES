@@ -1,0 +1,8 @@
+------1. refresh on "contact admin"
+------2. File button disable when no file, when uploading
+------3. show err message
+------4. logout button in leaderboard
+------5. enable upload button on error upload
+------6. reset file on success or error upload
+------7. show loader while loading question
+8. Invalid username and password

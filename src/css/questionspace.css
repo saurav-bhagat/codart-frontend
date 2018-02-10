@@ -1,0 +1,77 @@
+.wrong-ans-msg{
+    animation: hide-animation 0.6s ease-in 0s;
+    visibility: visible;
+    width: 400px;
+    padding: 20px;
+    height: 120px;
+    background-color: #ef9a9a !important;
+    color: #fff;
+}
+@keyframes hide-animation {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+button:focus{
+    background-color: transparent;
+}
+.underlinee {
+
+}
+.questionspace-wrapper {
+    background-color: #616161;
+    /* color:  #ee6e73; */
+}
+
+.btnn1{
+    background: transparent;
+	border: 2px solid #ee6e73;
+	transition: all 0.2s ease;
+    color: #fff;
+    width: 170px;
+    padding: 5px 0 5px 0;
+}
+.btnn1:hover {
+    background: #ee6e73;
+    color: white;
+}
+.questionspace-container {
+    width: 90%;
+    margin: auto;
+}
+.main-question-wrapper {
+    width: 80%;
+    color: #fff;
+    line-height: 1.6;
+    font-size: 1.1em;
+}
+.file-btn{
+    background-color: #ee6e73 !important;
+}
+.file-field{
+    width: 60%;
+    display: inline-flex;
+}
+.disabled {
+    cursor: not-allowed;
+}
+.hideit{
+    display: none;
+}
+
+.preloader-wrapper {
+    position: absolute;
+    right: 45%;
+    top: 45%;
+}
+.switch label input[type=checkbox]:checked+.lever {
+    background-color: #ff8a80;
+}
+.switch label input[type=checkbox]:checked+.lever:after{
+    background-color: #ee6e73;
+}
