@@ -33,7 +33,8 @@ class QuestionSpace extends React.Component {
             pydisplay: true,
             showLoading:true,
             errorMsg: '',
-            errorMsgBool: false
+            errorMsgBool: false,
+            username : ''
         }
         this.skip = this.skip.bind(this);
         this.handlepyvchange = this.handlepyvchange.bind(this);
@@ -47,6 +48,34 @@ class QuestionSpace extends React.Component {
                         console.log(err);
                     })
                 }
+                let AuthStr = 'Bearer ' + localStorage.getItem('token');
+                let URLl     = 'http://192.168.43.12:3000/question/question';
+                axios.get(URLl, { headers: { Authorization: AuthStr } }).then(response => {
+                // If request is good...
+                    console.log(response.data);
+                    response.data['showSkip'] = true;
+                    this.setState(response.data);
+                    this.setState({showLoading:false});
+                })
+                .catch((error) => {
+                    let err=error.response.data.err;
+                    if(err==="No Active Question Yet.")
+                    {
+                        // this.setState()
+                        // alert("inside catch");
+                        this.setState({
+                            msg : "Contact Administrator for new Question",
+                            twoQue: false,
+                            wrongans: false,
+                            showSkip: false,
+                            file: '',
+                            pydisplay: false,
+                            showLoading:false
+                        })
+                    }
+
+                });
+
             })
 
         socket.on('question', (question)=> {
@@ -160,37 +189,37 @@ class QuestionSpace extends React.Component {
                 this.setState({uploadResponse: ''})
             }, 5000)
     }
-    componentDidMount() {
-        this.setState({showLoading:true});
-        let AuthStr = 'Bearer ' + localStorage.getItem('token');
-        let URLl     = 'http://192.168.43.12:3000/question/question';
-        axios.get(URLl, { headers: { Authorization: AuthStr } }).then(response => {
-        // If request is good...
-            console.log(response.data);
-            response.data['showSkip'] = true;
-            this.setState(response.data);
-            this.setState({showLoading:false});
-        })
-        .catch((error) => {
-            let err=error.response.data.err;
-            if(err==="No Active Question Yet.")
-            {
-                // this.setState()
-                // alert("inside catch");
-                this.setState({
-                    msg : "Contact Administrator for new Question",
-                    twoQue: false,
-                    wrongans: false,
-                    showSkip: false,
-                    file: '',
-                    pydisplay: false,
-                    showLoading:false
-                })
-            }
-
-        });
-
-    }
+    // componentDidMount() {
+    //     this.setState({showLoading:true});
+    //     let AuthStr = 'Bearer ' + localStorage.getItem('token');
+    //     let URLl     = 'http://192.168.43.12:3000/question/question';
+    //     axios.get(URLl, { headers: { Authorization: AuthStr } }).then(response => {
+    //     // If request is good...
+    //         console.log(response.data);
+    //         response.data['showSkip'] = true;
+    //         this.setState(response.data);
+    //         this.setState({showLoading:false});
+    //     })
+    //     .catch((error) => {
+    //         let err=error.response.data.err;
+    //         if(err==="No Active Question Yet.")
+    //         {
+    //             // this.setState()
+    //             // alert("inside catch");
+    //             this.setState({
+    //                 msg : "Contact Administrator for new Question",
+    //                 twoQue: false,
+    //                 wrongans: false,
+    //                 showSkip: false,
+    //                 file: '',
+    //                 pydisplay: false,
+    //                 showLoading:false
+    //             })
+    //         }
+    //
+    //     });
+    //
+    // }
 
     skip = () => {
         axios.post('http://192.168.43.12:3000/question/skip',{},{
@@ -245,7 +274,7 @@ class QuestionSpace extends React.Component {
         return(
             <div>
                 <div className="questionspace-wrapper" style={{minHeight:"100vh"}}>
-                    <Navbar ledorque="leaderboard" />
+                    <Navbar ledorque="leaderboard" username={this.state.username} />
                     {this.state.showLoading && <div>
 
                         <div className="preloader-wrapper big active">
@@ -383,7 +412,6 @@ class Skip extends React.Component {
             message: ''
         }
     }
-
     render(){
         return(
             <div>

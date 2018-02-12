@@ -9,3 +9,9 @@
     top: 20px;
     right: 50px;
 }
+.left-nav-links {
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    color: white;
+}

@@ -22,6 +22,9 @@ class Navbar extends React.Component {
     render() {
         return (
             <div className="custom-nav-wrapper">
+                <div className="left-nav-links">
+                    {this.props.username}
+                </div>
                 <div className="nav-links">
                     { this.state.showLogout &&
                         <Link to='/logout'><button className="btnn logout-class">Logout</button></Link>
