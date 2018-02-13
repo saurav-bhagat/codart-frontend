@@ -258,7 +258,7 @@ class QuestionSpace extends React.Component {
     render(){
         const queProps = {
             qnum : this.state.qnum,
-            stmt: this.state.stmt,
+            stmt: "jyfujycdyhtdc jhvjvfiuy kuvgii ",
             expln: this.state.expln,
             inputf : this.state.inputf,
             outputf : this.state.outputf,
@@ -275,7 +275,7 @@ class QuestionSpace extends React.Component {
             <div>
                 <div className="questionspace-wrapper" style={{minHeight:"100vh"}}>
                     <Navbar ledorque="leaderboard" username={this.state.username} />
-                    {this.state.showLoading && <div>
+                    {/* {this.state.showLoading && <div>
 
                         <div className="preloader-wrapper big active">
                             <div className="spinner-layer spinner-blue-only">
@@ -292,7 +292,7 @@ class QuestionSpace extends React.Component {
                         </div>
 
                     </div>}
-                    {!this.state.showLoading &&
+                    {!this.state.showLoading && */}
                     <div className="questionspace-container">
                         {this.state.twoQue && <QueDisplay  que = {queProps} />}
                         <div className="row">
@@ -321,7 +321,7 @@ class QuestionSpace extends React.Component {
                         </div>
 
                     </div>
-                }
+                {/* } */}
                     <br /><br />
                 </div>
             </div>
@@ -333,7 +333,7 @@ const QueDisplay = (props) => {
     return(
         <div>
             <div className="main-question-wrapper">
-                <h4 style={{marginTop: 0}} className="underlinee">Question {props.que.qnum}: </h4>
+                <h4 style={{marginTop: 0}} className="underlinee">Problem {props.que.qnum}: </h4>
                     <p>
                         {props.que.stmt}
                     </p>
@@ -376,7 +376,7 @@ const QueDisplay = (props) => {
                         </div>
                     </div>
                     <button onClick={props.que.codeUpload} className={` ${props.que.fileSubmitDisabled? "disabled ":""} btn file-btn `}>{props.que.uploadText}</button>
-                    <div>{props.que.uploadResponse}</div>
+                    <div className="upload-response">{props.que.uploadResponse}</div>
                     </form>
 
                 </div>

@@ -21,7 +21,13 @@ button:focus{
     background-color: transparent;
 }
 .underlinee {
-
+    color: #e0e0e0;
+}
+.main-question-wrapper p {
+    color: #fff;
+    line-height: 1.3;
+    letter-spacing: 1px;
+    word-spacing: 2px;
 }
 .questionspace-wrapper {
     background-color: #616161;
@@ -46,7 +52,6 @@ button:focus{
 }
 .main-question-wrapper {
     width: 80%;
-    color: #fff;
     line-height: 1.6;
     font-size: 1.1em;
 }
@@ -74,4 +79,7 @@ button:focus{
 }
 .switch label input[type=checkbox]:checked+.lever:after{
     background-color: #ee6e73;
+}
+.upload-response {
+    color: #fff !important;
 }
