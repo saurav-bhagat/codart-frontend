@@ -8,6 +8,7 @@ import HackerEarth from './../img/hackerearth.png';
 import vitlogo from './../img/vitlogo.png';
 import Codartlogo from './../img/codartlogo.png';
 import io from 'socket.io-client';
+import swal from 'sweetalert';
 let socket = io.connect(`http://192.168.225.42:3000`);
 
 class Login extends React.Component {
@@ -32,7 +33,7 @@ class Login extends React.Component {
     handleLogin(e) {
 
         this.setState ({ loginValue : 'sigining in...' });
-        axios.post('http://192.168.43.12:3000/user/login', {
+        axios.post('http://192.168.225.42:3000/user/login', {
             username: this.state.username,
             password: this.state.password
           })
@@ -47,7 +48,14 @@ class Login extends React.Component {
 
           })
           .catch((error) => {
-            console.log(error);
+              console.log(error.response.data.err);
+              if(error.response.data.err === "Already A Session Exists.") {
+                  swal("Already A Session Exists.");
+              }
+              else if(error.response.data.err === "Invalid Username/Password") {
+                  swal("Invalid Username/Password");
+              }
+
           });
     }
     render(){

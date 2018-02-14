@@ -1,5 +1,5 @@
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://192.168.137.1:3000');
+// const socket = openSocket('http://192.168.137.1:3000');
 
 
 

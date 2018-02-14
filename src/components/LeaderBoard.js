@@ -22,7 +22,7 @@ class Leaderboard extends React.Component {
         this.state = {
             ledetails : []
         }
-        socket = io(`http://192.168.43.12:3000`);
+        socket = io(`http://192.168.225.42:3000`);
         socket.emit('lead', "saurav");
         socket.on('connect', () => {
             console.log("connected inside leaderboard");
@@ -42,7 +42,7 @@ class Leaderboard extends React.Component {
     }
 
     componentDidMount() {
-        axios.get("http://192.168.43.12:3000/user/leaderboard")
+        axios.get("http://192.168.225.42:3000/user/leaderboard")
             .then(res => {
 
                 for(let i=0; i< res.data.data.length ;i++)

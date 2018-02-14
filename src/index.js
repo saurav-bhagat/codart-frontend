@@ -14,8 +14,8 @@ const Main = () => (
                   <Route exact path='/' component={App}  />
                   <Route exact path="/leaderboard" component={Leaderboard}  />
 
-                       <Route exact path="/QuestionSpace" component={QuestionSpace}  />
-
+                  <Route exact path="/QuestionSpace" component={QuestionSpace}  />
+                  
                   <Route exact path="/logout" component={Logout}  />
               </Switch>
         </BrowserRouter>

@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import './../css/questionspace.css';
 import Navbar from './Navbar';
 import swal from 'sweetalert';
+import renderHTML from 'react-render-html';
 
 
 let socket;
@@ -38,7 +39,7 @@ class QuestionSpace extends React.Component {
         }
         this.skip = this.skip.bind(this);
         this.handlepyvchange = this.handlepyvchange.bind(this);
-        socket = io(`http://192.168.43.12:3000`);
+        socket = io(`http://192.168.225.42:3000`);
             socket.on('connect',()=>{
                 console.log("Connected socket");
                 if(localStorage.getItem('token')!== null)
@@ -49,7 +50,7 @@ class QuestionSpace extends React.Component {
                     })
                 }
                 let AuthStr = 'Bearer ' + localStorage.getItem('token');
-                let URLl     = 'http://192.168.43.12:3000/question/question';
+                let URLl     = 'http://192.168.225.42:3000/question/question';
                 axios.get(URLl, { headers: { Authorization: AuthStr } }).then(response => {
                 // If request is good...
                     console.log(response.data);
@@ -58,8 +59,8 @@ class QuestionSpace extends React.Component {
                     this.setState({showLoading:false});
                 })
                 .catch((error) => {
-                    let err=error.response.data.err;
-                    if(err==="No Active Question Yet.")
+                    // let err=;
+                    if(error.response.data.err ==="No Active Question Yet.")
                     {
                         // this.setState()
                         // alert("inside catch");
@@ -121,7 +122,7 @@ class QuestionSpace extends React.Component {
         formData.append('code',this.state.file);
         formData.append('py', this.state.pyv);
         this.setState({uploadmsg: 'uploading..'});
-        axios.post('http://192.168.43.12:3000/user/post',
+        axios.post('http://192.168.225.42:3000/user/post',
                 formData,{
                     headers: {
                         'Authorization' : 'Bearer '+localStorage.getItem('token')
@@ -192,7 +193,7 @@ class QuestionSpace extends React.Component {
     // componentDidMount() {
     //     this.setState({showLoading:true});
     //     let AuthStr = 'Bearer ' + localStorage.getItem('token');
-    //     let URLl     = 'http://192.168.43.12:3000/question/question';
+    //     let URLl     = 'http://192.168.225.42:3000/question/question';
     //     axios.get(URLl, { headers: { Authorization: AuthStr } }).then(response => {
     //     // If request is good...
     //         console.log(response.data);
@@ -222,7 +223,7 @@ class QuestionSpace extends React.Component {
     // }
 
     skip = () => {
-        axios.post('http://192.168.43.12:3000/question/skip',{},{
+        axios.post('http://192.168.225.42:3000/question/skip',{},{
             headers: {
                 'Authorization' : 'Bearer '+localStorage.getItem('token')
             }
@@ -232,6 +233,7 @@ class QuestionSpace extends React.Component {
             //response.data.err or Msg
             if(response.data.flag===-1){
                 this.setState({
+                    showLoading: false,
                     msg : "Contact Administrator for new Question",
                     twoQue: false,
                     showSkip: false,
@@ -243,6 +245,9 @@ class QuestionSpace extends React.Component {
             else if(response.data.msg){
                 this.setState({onSkip: response.data.msg})
             }
+            else if(response.data.err === "Already Skipped Two Questions.") {
+                swal("Already Skipped Two Questions.");
+            }
             else{
                 this.setState({onSkip: response.data.msg})
             }
@@ -253,18 +258,24 @@ class QuestionSpace extends React.Component {
         })
         .catch ((err) => {
             console.log(err);
+            alert(err);
+            // swal({
+            //   title: err.response.data.err,
+            //   text: "Cannot Skipped",
+            //   icon: "error",
+            // });
         })
     }
     render(){
         const queProps = {
             qnum : this.state.qnum,
-            stmt: "jyfujycdyhtdc jhvjvfiuy kuvgii ",
-            expln: this.state.expln,
-            inputf : this.state.inputf,
-            outputf : this.state.outputf,
-            sinput : this.state.sinput,
-            soutput: this.state.soutput,
-            cnstr : this.state.cnstr,
+            stmt: renderHTML(this.state.stmt),
+            expln: renderHTML(this.state.expln),
+            inputf : renderHTML(this.state.inputf),
+            outputf : renderHTML(this.state.outputf),
+            sinput : renderHTML(this.state.sinput),
+            soutput: renderHTML(this.state.soutput),
+            cnstr : renderHTML(this.state.cnstr),
             fileChange: this.fileChange,
             uploadText: this.state.uploadmsg,
             codeUpload: this.codeUpload,
@@ -275,7 +286,7 @@ class QuestionSpace extends React.Component {
             <div>
                 <div className="questionspace-wrapper" style={{minHeight:"100vh"}}>
                     <Navbar ledorque="leaderboard" username={this.state.username} />
-                    {/* {this.state.showLoading && <div>
+                    {this.state.showLoading && <div>
 
                         <div className="preloader-wrapper big active">
                             <div className="spinner-layer spinner-blue-only">
@@ -292,7 +303,7 @@ class QuestionSpace extends React.Component {
                         </div>
 
                     </div>}
-                    {!this.state.showLoading && */}
+                    {!this.state.showLoading &&
                     <div className="questionspace-container">
                         {this.state.twoQue && <QueDisplay  que = {queProps} />}
                         <div className="row">
@@ -321,7 +332,7 @@ class QuestionSpace extends React.Component {
                         </div>
 
                     </div>
-                {/* } */}
+                    }
                     <br /><br />
                 </div>
             </div>

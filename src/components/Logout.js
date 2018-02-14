@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import {
   withRouter
 } from 'react-router-dom';
-let socket = io(`http://192.168.43.12:3000`);
+let socket = io(`http://192.168.225.42:3000`);
 
 
 
